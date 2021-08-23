@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/c4aa048095.js" crossorigin="anonymous"></script>
+
+    <title>Movies</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 2px;
+            background: black;
+        }
+
+        .button {
+            font-family: cursive;
+            font-weight: bold;
+            width: 100px;
+            height: 40px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .buttonObjfit {
+            font-size: 20px;
+            color: rgb(0, 255, 136);
+        }
+
+        video {
+            border-radius: 5px;
+        }
+
+        #play {
+            width: 50px;
+            height: 40px;
+            font-size: 20px;
+            border: none;
+            border-radius: 5px;
+            transition: .5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            color: red;
+
+        }
+
+
+        #pause {
+            width: 50px;
+            height: 40px;
+            font-size: 20px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        #btn_container {
+            text-align: center;
+            height: 50px;
+        }
+
+        .skip {
+            color: white;
+            transition: cubic-bezier(0.55, 0.055, 0.675, 0.19) .4s;
+        }
+
+        #hide {
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="mainContainer">
+        <video id="video" width="100%" controls>
+            <source src="./Mirzapur_S1/mE8.mkv" />
+        </video>
+        <br>
+        <div id='btn_container'>
+
+            <button id="skipBack10btn" class="button skip" onclick="skip(-10,skipBack10btn)">
+                <i class="fas fa-backward"></i>
+            </button>
+            <button id='play' onclick="playit()">
+                <i class="far fa-play-circle"></i>
+            </button>
+            <button id="skip10btn" class="button skip" onclick="skip(10,skip10btn)">
+                <i class="fas fa-forward"></i>
+            </button>
+            <button class="button buttonObjfit" onclick="Aratio()">Normal</button>
+            <button class="button buttonObjfit" onclick="Fratio()">Fill</button>
+            <button class="button buttonObjfit" onclick="Cratio()">Cover</button>
+            <button id="hide" class="button hide" onclick="hide()">
+                <i class="fas fa-eye"></i>
+            </button>
+        </div>
+    </div>
+    <script>
+        var video = document.getElementById('video')
+        var playBtn = document.getElementById('play')
+        var pauseBtn = document.getElementById('pause')
+        var skip10btn = document.getElementById('skip10btn')
+        var hideEle = document.getElementById('hide')
+        var isTrue = true
+        var isTrueForHide = true
+        function playit() {
+            if (isTrue) {
+                video.play()
+                playBtn.innerHTML = '<i class="far fa-pause-circle"></i>'
+                playBtn.style.color = '#16ff16'
+                isTrue = false
+            } else {
+                video.pause()
+                playBtn.innerHTML = '<i class="far fa-play-circle"></i>'
+                playBtn.style.color = 'red'
+                isTrue = true
+            }
+        }
+        function skip(value, id) {
+            video.currentTime += value;
+            id.style.color = 'red'
+            id.style.fontSize = '20px'
+            skipColor(id)
+        }
+        function skipColor(id) {
+            setTimeout(() => {
+                id.style.color = 'white'
+                id.style.fontSize = '14px'
+            }, 400);
+        }
+        function Aratio() {
+            video.style.objectFit = ''
+        }
+        function Fratio() {
+            video.style.objectFit = 'fill'
+        }
+        function Cratio() {
+            video.style.objectFit = 'cover'
+        }
+
+        function hide() {
+            if (isTrueForHide) {
+
+
+                video.style.visibility = 'hidden'
+                hideEle.innerHTML = '<i class="far fa-eye-slash"></i>'
+                isTrueForHide = false
+            } else {
+                video.style.visibility = 'visible'
+                hideEle.innerHTML = '<i class="fas fa-eye"></i>'
+                isTrueForHide = true
+            }
+        }
+    </script>
+</body>
+
+</html>
